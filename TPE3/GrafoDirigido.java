@@ -123,10 +123,14 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		Iterator<Arco<T>> aOfVertice = getVertice(verticeId).getArcos().iterator();
 		return new IteradorArco(aOfVertice);
 	}
+
+	// Complejidad: O(n + k) n->cantidadDeVertices k->cantidadDeArcos
 	@Override
 	public int obtenerKMs(String verticeId1, String verticeId2){
 		return (int) obtenerArco(verticeId1,verticeId2).getEtiqueta();
 	}
+
+	//Complejidad: O(n) n->cantidadDeVertices
 	@Override
 	public boolean isBalanza(String verticeId1){
 		return getVertice(verticeId1).isBalanza();
