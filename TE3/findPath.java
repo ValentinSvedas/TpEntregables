@@ -34,7 +34,7 @@ public class findPath {
 		return caminoFinal.isEmpty()?null:caminoFinal.get(caminoFinal.size()-1);
 	}
 
-	public ArrayList<ArrayList<String>> encontrarCamino(String vertice,int kms,int balanza) {
+	private ArrayList<ArrayList<String>> encontrarCamino(String vertice,int kms,int balanza) {
 		ArrayList<ArrayList<String>> resultado = new ArrayList<>();
 		colores.put(vertice, "amarillo");
 		if ((vertice.equals(this.destino)) && balanza<=1) {//Comprueba que sea el destino y que no se haya pasado con la condicion de balanzas
