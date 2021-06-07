@@ -9,38 +9,49 @@ public class Route {
 
     public void crearGrafo(){
 
-        ciudades.agregarVertice("Pehuajo",true,true,3,5);
-        ciudades.agregarVertice("Ayacucho",false,false,1,2);
-        ciudades.agregarVertice("Olavarria",true,false,9,17);
-        ciudades.agregarVertice("Rauch",false,true,1,0);
-        ciudades.agregarVertice("Bolivar",false,false,7,4);
-        ciudades.agregarVertice("Tandil",true,true,2,5);
-        ciudades.agregarVertice("Azul",false,true,4,4);
-        ciudades.agregarVertice("Mar del plata",true,false,15,12);
+        Ciudad pehuajo = new Ciudad("Pehuajo",true,true,3,5);
+        Ciudad ayacucho = new Ciudad("Ayacucho",false,false,1,2);
+        Ciudad olavarria = new Ciudad("Olavarria",true,false,9,17);
+        Ciudad rauch = new Ciudad("Rauch",false,true,1,0);
+        Ciudad bolivar = new Ciudad("Bolivar",false,false,7,4);
+        Ciudad tandil = new Ciudad("Tandil",true,true,2,5);
+        Ciudad azul = new Ciudad("Azul",false,true,4,4);
+        Ciudad mardelplata = new Ciudad("Mar del plata",true,false,15,12);
+
+        ciudades.agregarVertice(pehuajo);
+        ciudades.agregarVertice(ayacucho);
+        ciudades.agregarVertice(olavarria);
+        ciudades.agregarVertice(rauch);
+        ciudades.agregarVertice(bolivar);
+        ciudades.agregarVertice(tandil);
+        ciudades.agregarVertice(azul);
+        ciudades.agregarVertice(mardelplata);
 
 
-        ciudades.agregarArco("Azul", "Bolivar", 100);
-        ciudades.agregarArco("Bolivar", "Olavarria", 140);
-        ciudades.agregarArco("Tandil", "Olavarria", 130);
-        ciudades.agregarArco("Bolivar", "Pehuajo", 70);
-        ciudades.agregarArco("Pehuajo", "Ayacucho", 540);
-        ciudades.agregarArco("Ayacucho", "Tandil", 70);
-        ciudades.agregarArco("Ayacucho", "Rauch", 50);
-        ciudades.agregarArco("Rauch", "Tandil", 60);
-        ciudades.agregarArco("Rauch", "Olavarria", 210);
-        ciudades.agregarArco("Tandil", "Mar del plata", 200);
+        ciudades.agregarArco(azul, bolivar, 100);
+        ciudades.agregarArco(bolivar, olavarria, 140);
+        ciudades.agregarArco(tandil, olavarria, 130);
+        ciudades.agregarArco(bolivar, pehuajo, 70);
+        ciudades.agregarArco(pehuajo, ayacucho, 540);
+        ciudades.agregarArco(ayacucho, tandil, 70);
+        ciudades.agregarArco(ayacucho, rauch, 50);
+        ciudades.agregarArco(rauch, tandil, 60);
+        ciudades.agregarArco(rauch, olavarria, 210);
+        ciudades.agregarArco(tandil, mardelplata, 200);
 
 
-        findPath Camino1 = new findPath(ciudades, "Azul", "Ayacucho");
-        findPath Camino2 = new findPath(ciudades, "Rauch", "Mar del plata");
-        findPath Camino3 = new findPath(ciudades, "Mar del plata", "Pehuajo");
+
+        findPath Camino1 = new findPath(ciudades, azul, ayacucho);
+        findPath Camino2 = new findPath(ciudades, rauch, mardelplata);
+        findPath Camino3 = new findPath(ciudades, mardelplata, pehuajo);
         System.out.println(Camino1.encontrarCamino());
         System.out.println(Camino2.encontrarCamino());
         System.out.println(Camino3.encontrarCamino());
-        ciudades.borrarVertice("Ayacucho");
-        ciudades.borrarArco("Tandil","Rauch");
-        findPath Camino4 = new findPath(ciudades, "Mar del plata", "Pehuajo");
+        ciudades.borrarVertice(ayacucho);
+        ciudades.borrarArco(tandil,rauch);
+        findPath Camino4 = new findPath(ciudades, mardelplata, pehuajo);
         System.out.println(Camino4.encontrarCamino());
+
 
 		/*
 		origen: Azul - destino: Ayacucho

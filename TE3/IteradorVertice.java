@@ -2,7 +2,7 @@ package tp3;
 
 import java.util.Iterator;
 
-public class IteradorVertice<T> implements Iterator<String> {
+public class IteradorVertice<T> implements Iterator<Ciudad> {
     private Iterator<Vertice<T>> it;
 
     public IteradorVertice(Iterator<Vertice<T>> iteratorVertices) {
@@ -15,7 +15,7 @@ public class IteradorVertice<T> implements Iterator<String> {
     }
 
     @Override
-    public String next() {
-        return it.next().getId();
+    public Ciudad next() {
+        return it.next().getCiudad();
     }
 }

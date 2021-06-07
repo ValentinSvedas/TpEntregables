@@ -2,7 +2,7 @@ package tp3;
 
 import java.util.Iterator;
 
-    public class IteradorArco<T> implements Iterator<String> {
+    public class IteradorArco<T> implements Iterator<Ciudad> {
 
         private Iterator<Arco<T>> it;
 
@@ -16,7 +16,7 @@ import java.util.Iterator;
         }
 
         @Override
-        public String next() {
+        public Ciudad next() {
             return it.next().getVerticeDestino();
         }
     }

@@ -6,46 +6,39 @@ import java.util.List;
 
 public class Vertice<T> {
 
-    private String id;
+    private Ciudad ciudad;
     private T value;
     private ArrayList<Arco<T>> arcos;
-    private int estacionesServicio;
-    private int talleresMecanicos;
-    private boolean balanza;
-    private boolean radares;
 
-    public Vertice(String id,boolean balanza, boolean radares, int estacionesServicio, int talleresMecanicos) {
-        this.id = id;
+
+    public Vertice(Ciudad ciudad) {
         this.arcos = new ArrayList<>();
-        this.balanza = balanza;
-        this.radares = radares;
-        this.estacionesServicio = estacionesServicio;
-        this.talleresMecanicos = talleresMecanicos;
+        this.ciudad=ciudad;
     }
 
-    public Vertice(String id, T value) {
-        this.id = id;
+    public Vertice(Ciudad ciudad, T value) {
+        this.ciudad=ciudad;
         this.value = value;
         this.arcos = new ArrayList<>();
     }
     // Complejidad: O(n) n->cantidadDeArcos
-    public void addArco(String vertice,T etiqueta) {
-        if(!existeArco(vertice)) {
-            arcos.add(new Arco(this.id, vertice, etiqueta));
+    public void addArco(Ciudad ciudad,T etiqueta) {
+        if(!existeArco(ciudad)) {
+            arcos.add(new Arco(this.ciudad, ciudad, etiqueta));
         }
     }
     // Complejidad: O(n) n->cantidadDeArcos
-    public boolean existeArco(String verticeDestino) {
+    public boolean existeArco(Ciudad ciudadDestino) {
         for(int i = 0; arcos.size() >i; i++){
-            if (arcos.get(i).getVerticeDestino().equals(verticeDestino)){
+            if (arcos.get(i).getVerticeDestino().equals(ciudadDestino.getId())){
                 return true;
             }
         }
         return false;
     }
     // Complejidad: O(n) n->cantidadDeArcos
-    public void removeArc(String verticeDestino) {
-        Arco arcoAux= new Arco(this.id, verticeDestino,null);
+    public void removeArc(Ciudad ciudadDestino) {
+        Arco arcoAux= new Arco(this.ciudad, ciudadDestino,null);
         for(int i = 0; arcos.size() >i; i++){
             if(arcos.get(i).equals(arcoAux)){
                 arcos.remove(i);
@@ -53,13 +46,8 @@ public class Vertice<T> {
         }
     }
 
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public Ciudad getCiudad(){
+        return this.ciudad;
     }
 
     public T getValue() {
@@ -85,9 +73,9 @@ public class Vertice<T> {
     }
 
     // Complejidad: O(n) n->cantidadDeArcos
-    public Arco getArco(String verticeId2) {
+    public Arco getArco(Ciudad ciudad) {
         for(int i = 0; arcos.size() >i; i++){
-            if (arcos.get(i).getVerticeDestino().equals(verticeId2)){
+            if (arcos.get(i).getVerticeDestino().equals(ciudad)){
                 return arcos.get(i);
             }
         }
@@ -95,19 +83,19 @@ public class Vertice<T> {
     }
 
     public int getEstacionesServicio() {
-        return estacionesServicio;
+        return ciudad.getEstacionesServicio();
     }
 
     public boolean isBalanza() {
-        return balanza;
+        return ciudad.isBalanza();
     }
 
     public boolean isRadares() {
-        return radares;
+        return ciudad.isRadares();
     }
 
     public int getTalleresMecanicos() {
-        return talleresMecanicos;
+        return ciudad.getTalleresMecanicos();
     }
 
     public int getArcoSize() {

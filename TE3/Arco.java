@@ -8,26 +8,26 @@ package tp3;
  */
 public class Arco<T> {
 
-	private String verticeOrigen;
-	private String verticeDestino;
+	private Ciudad verticeOrigen;
+	private Ciudad verticeDestino;
 	private T etiqueta;
 
-	public Arco(String verticeOrigen, String verticeDestino, T etiqueta) {
+	public Arco(Ciudad verticeOrigen, Ciudad verticeDestino, T etiqueta) {
 		this.verticeOrigen = verticeOrigen;
 		this.verticeDestino = verticeDestino;
 		this.etiqueta = etiqueta;
 	}
 
-	public String getVerticeOrigen() {
+	public Ciudad getVerticeOrigen() {
 		return verticeOrigen;
 	}
 	
-	public String getVerticeDestino() {
+	public Ciudad getVerticeDestino() {
 		return verticeDestino;
 	}
 
 	public T getEtiqueta() {
-		return etiqueta;
+		return this.etiqueta;
 	}
 
 	@Override

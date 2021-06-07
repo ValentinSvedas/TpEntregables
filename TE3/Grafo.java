@@ -1,31 +1,29 @@
 package tp3;
 
-import tp3.Arco;
-
 import java.util.Iterator;
 
 public interface Grafo<T> {
 	
 	// Agrega un vertice 
-	public void agregarVertice(String verticeId,boolean balanza, boolean radares, int estacionesServicio, int talleresM);
+	public void agregarVertice(Ciudad ciudad);
 
 	// Borra un vertice
-	public void borrarVertice(String verticeId);
+	public void borrarVertice(Ciudad ciudad);
 
 	// Agrega un arco con una etiqueta, que conecta el verticeId1 con el verticeId2
-	public void agregarArco(String verticeId1, String verticeId2, T etiqueta);
+	public void agregarArco(Ciudad ciudad, Ciudad ciudad2, T etiqueta);
 
 	// Borra el arco que conecta el verticeId1 con el verticeId2
-	public void borrarArco(String verticeId1, String verticeId2);
+	public void borrarArco(Ciudad ciudad1, Ciudad ciudad2);
 
 	// Verifica si existe un vertice
-	public boolean contieneVertice(String verticeId);
+	public boolean contieneVertice(Ciudad ciudad);
 
 	// Verifica si existe un arco entre dos vertices
-	public boolean existeArco(String verticeId1, String verticeId2);
-	
+	public boolean existeArco(Ciudad ciudad1, Ciudad ciudad2);
+
 	// Obtener el arco que conecta el verticeId1 con el verticeId2
-	public Arco<T> obtenerArco(String verticeId1, String verticeId2);
+	public T obtenerArco(Ciudad ciudad1, Ciudad ciudad2);
 
 	// Devuelve la cantidad total de vertices en el grafo
 	public int cantidadVertices();
@@ -33,20 +31,17 @@ public interface Grafo<T> {
 	// Devuelve la cantidad total de arcos en el grafo
 	public int cantidadArcos();
 
-	// Obtiene un iterador que me permite recorrer todos los vertices almacenados en el grafo 
-	public Iterator<String> obtenerVertices();
+	// Obtiene un iterador que me permite recorrer todos los vertices almacenados en el grafo
+	public Iterator<Ciudad> obtenerVertices();
 
-	// Obtiene un iterador que me permite recorrer todos los vertices adyacentes a verticeId 
-	public Iterator<String> obtenerAdyacentes(String verticeId);
+	// Obtiene un iterador que me permite recorrer todos los vertices adyacentes a verticeId
+	public Iterator<Ciudad> obtenerAdyacentes(Ciudad ciudad);
 
 	// Obtiene un iterador que me permite recorrer todos los arcos del grafo
 	public Iterator<Arco<T>> obtenerArcos();
-		
-	// Obtiene un iterador que me permite recorrer todos los arcos que parten desde verticeId
-	public Iterator<Arco<T>> obtenerArcos(String verticeId);
 
-	public int obtenerKMs(String verticeId1, String verticeId2);
-	public boolean isBalanza(String verticeId1);
+	// Obtiene un iterador que me permite recorrer todos los arcos que parten desde verticeId
+	public Iterator<Arco<T>> obtenerArcos(Ciudad ciudad);
 
 	
 }

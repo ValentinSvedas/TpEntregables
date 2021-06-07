@@ -12,9 +12,9 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	//Complejidad: O(n) n->cantidadDeVertices
 	@Override
-	public void agregarVertice(String verticeId, boolean balanza, boolean radares, int estacionesServicio, int talleresMecanicos) {
-		Vertice vertc = new Vertice(verticeId, balanza, radares, estacionesServicio, talleresMecanicos);
-		if (!listVertices.contains(getVertice(verticeId))) {
+	public void agregarVertice(Ciudad ciudad) {
+		Vertice vertc = new Vertice(ciudad);
+		if (!listVertices.contains(getVertice(ciudad))) {
 			listVertices.add(vertc);
 		}
 
@@ -22,26 +22,26 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	//Complejidad: O(n) n->cantidadDeArcos
 	@Override
-	public void borrarVertice(String verticeId) {
-		Iterator<String> it = obtenerAdyacentes(verticeId);
+	public void borrarVertice(Ciudad ciudad) {
+		Iterator<Ciudad> it = obtenerAdyacentes(ciudad);
 		while (it.hasNext()) {
-			this.borrarArco(verticeId, it.next());
+			this.borrarArco(ciudad, it.next());
 		}
-		listVertices.remove(getVertice(verticeId));
+		listVertices.remove(getVertice(ciudad));
 	}
 
 	//Complejidad: O(n + O(2)) n->cantidadDeVertices
 	@Override
-	public void agregarArco(String verticeId1, String verticeId2, T etiqueta) {
-		if (Objects.nonNull(getVertice(verticeId1)) && Objects.nonNull(getVertice(verticeId2))) {
-			getVertice(verticeId1).addArco(verticeId2, etiqueta);
+	public void agregarArco(Ciudad c1, Ciudad c2, T etiqueta) {
+		if (Objects.nonNull(getVertice(c1)) && Objects.nonNull(getVertice(c2))) {
+			getVertice(c1).addArco(c2, etiqueta);
 		}
 	}
 
 	//Complejidad: O(n) n->cantidadDeVertices
-	private Vertice getVertice(String vertice) {
+	private Vertice getVertice(Ciudad c) {
 		for (int i = 0; listVertices.size() > i; i++) {
-			if (listVertices.get(i).getId().equals(vertice)) {
+			if (listVertices.get(i).getCiudad().equals(c)) {
 				return listVertices.get(i);
 			}
 		}
@@ -50,14 +50,14 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	// Complejidad: O(n + k) n->cantidadDeVertices k->cantidadDeArcos
 	@Override
-	public void borrarArco(String verticeId1, String verticeId2) {
-		getVertice(verticeId1).removeArc(verticeId2);
+	public void borrarArco(Ciudad c1, Ciudad c2) {
+		getVertice(c1).removeArc(c2);
 	}
 
 	//Complejidad: O(n + O(2)) n->cantidadDeVertices
 	@Override
-	public boolean contieneVertice(String verticeId) {
-		if (Objects.nonNull(getVertice(verticeId))) {
+	public boolean contieneVertice(Ciudad c1) {
+		if (Objects.nonNull(getVertice(c1))) {
 			return true;
 		}
 		return false;
@@ -65,14 +65,14 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	// Complejidad: O(n + k) n->cantidadDeVertices k->cantidadDeArcos
 	@Override
-	public boolean existeArco(String verticeId1, String verticeId2) {
-			return getVertice(verticeId1).existeArco(verticeId2);
+	public boolean existeArco(Ciudad c1, Ciudad c2) {
+			return getVertice(c1).existeArco(c2);
 	}
 
 	// Complejidad: O(n + k) n->cantidadDeVertices k->cantidadDeArcos
 	@Override
-	public Arco<T> obtenerArco(String verticeId1, String verticeId2) {
-		return getVertice(verticeId1).getArco(verticeId2);
+	public T obtenerArco(Ciudad c1, Ciudad c2) {
+		return (T) getVertice(c1).getArco(c2).getEtiqueta();
 	}
 
 	//O(1)
@@ -93,15 +93,15 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	//Complejidad: O(n) n->cantidadDeVertices
 	@Override
-	public Iterator<String> obtenerVertices() {
+	public Iterator<Ciudad> obtenerVertices() {
 		Iterator<Vertice<T>> verticesIT = listVertices.iterator();
 		return new IteradorVertice(verticesIT);
 	}
 
 	//Complejidad: O(n) n->cantidadDeVertices
 	@Override
-	public Iterator<String> obtenerAdyacentes(String verticeId) {//Esta dando error porque le estoy pasando un iterador de string en vez de Vectores
-		Vertice vertice = getVertice(verticeId);
+	public Iterator<Ciudad> obtenerAdyacentes(Ciudad ciudad) {
+		Vertice vertice = getVertice(ciudad);
 		if (Objects.nonNull(vertice)) return vertice.getVertexOfArcs();
 		else return Collections.emptyIterator();
 	}
@@ -119,21 +119,9 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	// Complejidad: O(n + k) n->cantidadDeVertices k->cantidadDeArcos
 	@Override
-	public Iterator<Arco<T>> obtenerArcos(String verticeId) {
-		Iterator<Arco<T>> aOfVertice = getVertice(verticeId).getArcos().iterator();
+	public Iterator<Arco<T>> obtenerArcos(Ciudad ciudad) {
+		Iterator aOfVertice = getVertice(ciudad).getArcos().iterator();
 		return new IteradorArco(aOfVertice);
-	}
-
-	// Complejidad: O(n + k) n->cantidadDeVertices k->cantidadDeArcos
-	@Override
-	public int obtenerKMs(String verticeId1, String verticeId2){
-		return (int) obtenerArco(verticeId1,verticeId2).getEtiqueta();
-	}
-
-	//Complejidad: O(n) n->cantidadDeVertices
-	@Override
-	public boolean isBalanza(String verticeId1){
-		return getVertice(verticeId1).isBalanza();
 	}
 
 }
