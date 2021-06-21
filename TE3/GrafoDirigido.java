@@ -4,6 +4,7 @@ import java.util.*;
 
 public class GrafoDirigido<T> implements Grafo<T> {
 	private ArrayList<Vertice<T>> listVertices; //clave valor donde clave es String(lugar) valor(adyacentes)
+	private int cantArcos;
 
 
 	public GrafoDirigido() {
@@ -35,6 +36,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	public void agregarArco(Ciudad c1, Ciudad c2, T etiqueta) {
 		if (Objects.nonNull(getVertice(c1)) && Objects.nonNull(getVertice(c2))) {
 			getVertice(c1).addArco(c2, etiqueta);
+			this.cantArcos++;
 		}
 	}
 
@@ -52,6 +54,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	@Override
 	public void borrarArco(Ciudad c1, Ciudad c2) {
 		getVertice(c1).removeArc(c2);
+		this.cantArcos--;
 	}
 
 	//Complejidad: O(n + O(2)) n->cantidadDeVertices
@@ -81,14 +84,10 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		return listVertices.size();
 	}
 
-	//Complejidad: O(n) n->cantidadDeVertices
+	//Complejidad: O(1)
 	@Override
 	public int cantidadArcos(){
-		int size =0;
-		for (Vertice vAux: listVertices){
-			size+=vAux.getArcoSize();
-		}
-		return size;
+		return cantArcos;
 	}
 
 	//Complejidad: O(n) n->cantidadDeVertices
