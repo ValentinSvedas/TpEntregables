@@ -10,19 +10,22 @@ import java.util.Objects;
 
 public class Backtracking {
 
-    private int mejorDiferencia=-1;
+    private int mejorDiferencia;
     private ArrayList<Empleado> mejorGrupo;
     private ArrayList<Empleado> visitados;
     private ArrayList<Empleado> todosEmpleados;
+    private int cont;
 
     public Backtracking(){
         visitados = new ArrayList<>();
-
+        mejorDiferencia = -1;
+        cont =0;
     }
     public ArrayList<ArrayList<Empleado>> resolverBacktracking(ArrayList<Empleado> empleados){
         int i =0;
         ArrayList<ArrayList<Empleado>> mejorSolucion = new ArrayList();
         ArrayList<Empleado> g1 = new ArrayList<>();
+        empleados.sort(Empleado::compareTo);
         todosEmpleados = empleados;
         while (i < todosEmpleados.size()){ // considera todos los empleados
         resolverBacktracking(todosEmpleados.get(i), g1);
@@ -31,6 +34,7 @@ public class Backtracking {
         g1 = mejorGrupo;
         mejorSolucion.add(g1);
         mejorSolucion.add(findGrupo2(g1));
+        System.out.println(cont);
         return mejorSolucion;
     }
 
@@ -47,18 +51,30 @@ public class Backtracking {
                 while (it.hasNext()) { // por cada empleado
                     Empleado siguiente = it.next();
                     if (!visitados.contains(siguiente) && !solucionG1.contains(siguiente)) { // restricción de re-visita
-                        solucionG1.add(siguiente);// aplicó cambios lo agrego al grupo1 y lo eliminó de empleado
-                        visitados.add(siguiente);
-                        resolverBacktracking(siguiente, solucionG1); // Llamar recursivamente
-                        solucionG1.remove(siguiente);// deshago los cambios, vuelvo a agregar al empleado en empleados y eliminar de grupo 1
+                            solucionG1.add(siguiente);// aplicó cambios lo agrego al grupo1 y lo eliminó de empleado
+                            visitados.add(siguiente);
+                        if (!poda(solucionG1, g2)) {
+                            break;
                         }
+                        cont++;
+                            resolverBacktracking(siguiente, solucionG1); // Llamar recursivamente
+                            solucionG1.remove(siguiente);// deshago los cambios, vuelvo a agregar al empleado en empleados y eliminar de grupo 1
+                    }
                     }
                 }
         visitados.clear();
     }
 
+    private boolean poda(ArrayList<Empleado> solucionG1, ArrayList<Empleado> g2) {
+        int fuerzaSolucion = getFuerzaTrabajo(solucionG1);
+        if (Objects.equals(fuerzaSolucion,getFuerzaTrabajo(g2)))
+            return false;
+        else
+            return true;
+    }
+
     private Iterator<Empleado> generarEstado() {
-        ArrayList<Empleado> empleados = todosEmpleados;
+        ArrayList<Empleado> empleados = new ArrayList<>(todosEmpleados);
         return empleados.iterator();
     }
 
